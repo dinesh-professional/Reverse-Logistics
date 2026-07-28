@@ -83,7 +83,7 @@ export default function AdminDashboard({
   };
 
   return (
-    <div className="w-full p-6 space-y-6 text-xs bg-[#FFFBF7]">
+    <div className="w-full space-y-6 text-xs bg-[#FFFBF7]">
       
       {/* Top Header Controls */}
       <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-orange-100 shadow-xs">

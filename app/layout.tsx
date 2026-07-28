@@ -18,7 +18,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
-      <body className="bg-[#F8F9FA] text-slate-900 font-sans antialiased min-h-screen relative overflow-hidden flex">
+      <body className="bg-[#FFFBF7] text-slate-900 font-sans antialiased min-h-screen relative flex flex-col overflow-x-hidden">
         {children}
       </body>
     </html>

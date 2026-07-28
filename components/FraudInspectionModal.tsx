@@ -50,10 +50,10 @@ export default function FraudInspectionModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fadeIn">
+    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4 animate-fadeIn">
       
       {/* Modal Dialog Card */}
-      <div className="w-full max-w-4xl bg-white rounded-3xl border border-orange-200 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-slate-900">
+      <div className="w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl border border-orange-200 shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-slate-900">
         
         {/* Modal Top Bar */}
         <div className="bg-orange-50/50 px-6 py-4 border-b border-orange-100 flex items-center justify-between gap-4">

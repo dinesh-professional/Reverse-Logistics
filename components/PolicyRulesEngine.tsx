@@ -53,10 +53,10 @@ export default function PolicyRulesEngine() {
   };
 
   return (
-    <div className="w-full p-6 space-y-6 bg-[#FFFBF7]">
+    <div className="w-full space-y-6 bg-[#FFFBF7]">
       
       {/* Header */}
-      <div className="flex items-center justify-between bg-white p-5 rounded-2xl border border-orange-100 shadow-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-5 rounded-2xl border border-orange-100 shadow-xs">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FC8019]">
             <Sliders className="w-5 h-5" />

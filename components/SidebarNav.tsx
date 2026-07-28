@@ -10,7 +10,8 @@ import {
   Sliders, 
   CheckCircle2,
   Activity,
-  Lock
+  Lock,
+  X
 } from 'lucide-react';
 import Logo from './Logo';
 
@@ -22,6 +23,8 @@ interface SidebarNavProps {
   selectedPlatform: string;
   flaggedCount: number;
   totalReturnsCount: number;
+  isOpenMobile?: boolean;
+  onCloseMobile?: () => void;
 }
 
 export default function SidebarNav({
@@ -30,6 +33,8 @@ export default function SidebarNav({
   selectedPlatform,
   flaggedCount,
   totalReturnsCount,
+  isOpenMobile = false,
+  onCloseMobile,
 }: SidebarNavProps) {
   const navItems = [
     {
@@ -80,15 +85,33 @@ export default function SidebarNav({
     },
   ];
 
-  return (
-    <aside className="w-72 bg-white text-slate-800 flex flex-col h-full border-r border-orange-100 shrink-0 select-none shadow-xs z-20">
+  const handleSelectTab = (tab: NavTab) => {
+    setActiveTab(tab);
+    if (onCloseMobile) {
+      onCloseMobile();
+    }
+  };
+
+  const navContent = (
+    <div className="w-72 bg-white text-slate-800 flex flex-col h-full border-r border-orange-100 shrink-0 select-none shadow-xs">
       
       {/* Brand Top Header */}
       <div className="p-4 border-b border-orange-100 flex items-center justify-between gap-2 bg-white">
         <Logo size="sm" />
-        <span className="px-2 py-0.5 rounded-full bg-orange-50 text-[#FC8019] text-[9px] font-extrabold tracking-wider uppercase border border-orange-200 whitespace-nowrap shrink-0">
-          ENTERPRISE
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="px-2 py-0.5 rounded-full bg-orange-50 text-[#FC8019] text-[9px] font-extrabold tracking-wider uppercase border border-orange-200 whitespace-nowrap shrink-0">
+            ENTERPRISE
+          </span>
+          {onCloseMobile && (
+            <button
+              onClick={onCloseMobile}
+              className="md:hidden p-1.5 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-orange-50 border border-orange-100"
+              aria-label="Close Mobile Navigation"
+            >
+              <X className="w-5 h-5 text-[#FC8019]" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Active Store Indicator Card */}
@@ -122,7 +145,7 @@ export default function SidebarNav({
           return (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id as NavTab)}
+              onClick={() => handleSelectTab(item.id as NavTab)}
               className={`w-full text-left p-2.5 rounded-xl transition-all duration-200 flex items-center justify-between gap-2 group cursor-pointer ${
                 isActive
                   ? 'bg-orange-50 text-[#FC8019] font-black border-l-4 border-[#FC8019] shadow-xs'
@@ -171,7 +194,28 @@ export default function SidebarNav({
           </div>
         </div>
       </div>
+    </div>
+  );
 
-    </aside>
+  return (
+    <>
+      {/* Desktop Sidebar (hidden on mobile, visible md and up) */}
+      <aside className="hidden md:flex h-full z-20 shrink-0">
+        {navContent}
+      </aside>
+
+      {/* Mobile Sidebar Overlay Drawer */}
+      {isOpenMobile && (
+        <div className="fixed inset-0 z-50 md:hidden flex">
+          <div 
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
+            onClick={onCloseMobile}
+          />
+          <div className="relative z-10 h-full max-w-[80vw]">
+            {navContent}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

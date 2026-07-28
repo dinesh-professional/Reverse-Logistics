@@ -17,6 +17,7 @@ export default function Home() {
   const [isIntegrationsModalOpen, setIsIntegrationsModalOpen] = useState<boolean>(false);
   const [selectedForInspection, setSelectedForInspection] = useState<ReturnRecord | null>(null);
   const [returnsList, setReturnsList] = useState<ReturnRecord[]>([]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   // Fetch returns from API with platform filter
   const fetchReturns = async (platformFilter?: string) => {
@@ -99,7 +100,7 @@ export default function Home() {
   const flaggedCount = returnsList.filter(r => r.status === 'Flagged').length;
 
   return (
-    <div className="flex w-screen h-screen bg-[#FFFBF7] overflow-hidden font-sans text-slate-900 selection:bg-[#FC8019] selection:text-white">
+    <div className="flex flex-col md:flex-row min-h-screen w-full md:h-screen md:overflow-hidden bg-[#FFFBF7] font-sans text-slate-900 selection:bg-[#FC8019] selection:text-white">
       
       {/* Sidebar Navigation Bar */}
       <SidebarNav
@@ -108,6 +109,8 @@ export default function Home() {
         selectedPlatform={selectedPlatform}
         flaggedCount={flaggedCount}
         totalReturnsCount={returnsList.length}
+        isOpenMobile={isMobileMenuOpen}
+        onCloseMobile={() => setIsMobileMenuOpen(false)}
       />
 
       {/* Main App Workspace View Container */}
@@ -122,10 +125,11 @@ export default function Home() {
           totalReturnsCount={returnsList.length}
           flaggedCount={flaggedCount}
           onRefreshData={() => fetchReturns(selectedPlatform)}
+          onToggleMobileMenu={() => setIsMobileMenuOpen(prev => !prev)}
         />
 
         {/* Dynamic Main Workspace Scrollable Viewport */}
-        <main className="flex-1 overflow-y-auto relative bg-[#FFFBF7]">
+        <main className="flex-1 overflow-y-auto relative bg-[#FFFBF7] p-3 sm:p-6">
           
           {activeTab === 'overview' && (
             <ExecutiveOverview

@@ -6,9 +6,11 @@ import {
   ShieldAlert, 
   Smartphone, 
   Store,
-  RefreshCw
+  RefreshCw,
+  Menu
 } from 'lucide-react';
 import { NavTab } from './SidebarNav';
+import Logo from './Logo';
 
 interface HeaderNavProps {
   activeTab: NavTab;
@@ -18,6 +20,7 @@ interface HeaderNavProps {
   totalReturnsCount: number;
   flaggedCount: number;
   onRefreshData?: () => void;
+  onToggleMobileMenu?: () => void;
 }
 
 export default function HeaderNav({
@@ -28,6 +31,7 @@ export default function HeaderNav({
   totalReturnsCount,
   flaggedCount,
   onRefreshData,
+  onToggleMobileMenu,
 }: HeaderNavProps) {
   
   const getTabTitle = (tab: NavTab) => {
@@ -52,50 +56,67 @@ export default function HeaderNav({
   const currentInfo = getTabTitle(activeTab);
 
   return (
-    <header className="min-h-16 py-3 px-6 bg-white border-b border-orange-100 flex flex-wrap items-center justify-between gap-4 z-20 shrink-0 shadow-xs">
+    <header className="min-h-16 py-3 px-4 sm:px-6 bg-white border-b border-orange-100 flex flex-wrap items-center justify-between gap-3 z-20 shrink-0 shadow-xs">
       
-      {/* Active Page Info (Left Section) */}
-      <div className="flex-1 min-w-[200px] overflow-hidden pr-2">
-        <div className="flex items-center gap-2">
-          <h1 className="text-base font-black text-slate-900 tracking-tight truncate">{currentInfo.title}</h1>
-          <span className="px-2 py-0.5 text-[9px] font-extrabold rounded-full bg-orange-50 text-[#FC8019] border border-orange-200 uppercase tracking-wider shrink-0 whitespace-nowrap hidden sm:inline-block">
-            LIVE SYSTEM
-          </span>
+      {/* Mobile Hamburger & Logo (Left Section) */}
+      <div className="flex items-center gap-3 flex-1 min-w-[200px] overflow-hidden">
+        {onToggleMobileMenu && (
+          <button
+            onClick={onToggleMobileMenu}
+            className="md:hidden p-2 rounded-xl bg-orange-50 text-[#FC8019] border border-orange-200 hover:bg-orange-100 transition cursor-pointer shrink-0"
+            aria-label="Toggle Mobile Menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
+
+        <div className="md:hidden shrink-0">
+          <Logo size="sm" />
         </div>
-        <p className="text-xs text-slate-500 font-medium truncate">{currentInfo.desc}</p>
+
+        <div className="overflow-hidden min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <h1 className="text-sm sm:text-base font-black text-slate-900 tracking-tight truncate">{currentInfo.title}</h1>
+            <span className="px-2 py-0.5 text-[9px] font-extrabold rounded-full bg-orange-50 text-[#FC8019] border border-orange-200 uppercase tracking-wider shrink-0 whitespace-nowrap hidden sm:inline-block">
+              LIVE SYSTEM
+            </span>
+          </div>
+          <p className="text-[11px] sm:text-xs text-slate-500 font-medium truncate hidden xs:block">{currentInfo.desc}</p>
+        </div>
       </div>
 
       {/* Global Controls & Actions (Right Section) */}
-      <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
+      <div className="flex items-center gap-2 shrink-0 flex-wrap">
         
         {/* Global Store Selector Filter */}
         <div className="flex items-center bg-orange-50/70 p-1 rounded-xl border border-orange-200 text-xs">
-          <Store className="w-3.5 h-3.5 ml-2 text-[#FC8019] shrink-0" />
+          <Store className="w-3.5 h-3.5 ml-2 text-[#FC8019] shrink-0 hidden xs:inline-block" />
           <select
             value={selectedPlatform}
             onChange={(e) => setSelectedPlatform(e.target.value)}
             aria-label="Select connected e-commerce store"
-            className="bg-white text-slate-900 font-bold px-2 py-1 rounded-lg outline-none border border-orange-200 focus:border-[#FC8019] cursor-pointer text-xs transition max-w-[220px] md:max-w-[280px] truncate"
+            className="bg-white text-slate-900 font-bold px-2 py-1 rounded-lg outline-none border border-orange-200 focus:border-[#FC8019] cursor-pointer text-xs transition max-w-[150px] sm:max-w-[220px] md:max-w-[280px] truncate"
           >
-            <option value="all">All Connected Stores (Shopify, Amazon, Flipkart, Woo)</option>
-            <option value="amazon">Amazon Merchant Hub (SP-API)</option>
-            <option value="flipkart">Flipkart Seller Center</option>
-            <option value="meesho">Meesho Supplier Hub</option>
-            <option value="direct">Shopify Direct Storefront</option>
+            <option value="all">All Stores</option>
+            <option value="amazon">Amazon Hub</option>
+            <option value="flipkart">Flipkart Seller</option>
+            <option value="meesho">Meesho Supplier</option>
+            <option value="direct">Shopify Direct</option>
           </select>
         </div>
 
         {/* Customer POV Quick Launch Button */}
         <button
           onClick={() => setActiveTab('customer_portal')}
-          className={`px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 border shadow-orange-glow cursor-pointer whitespace-nowrap ${
+          className={`px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-black transition flex items-center gap-1.5 border shadow-orange-glow cursor-pointer whitespace-nowrap ${
             activeTab === 'customer_portal'
               ? 'bg-[#FC8019] text-white border-[#FC8019]'
               : 'bg-white hover:bg-orange-50 text-[#FC8019] border-orange-300'
           }`}
         >
           <Smartphone className="w-3.5 h-3.5 shrink-0" />
-          <span>Test Customer POV</span>
+          <span className="hidden sm:inline">Test Customer POV</span>
+          <span className="sm:hidden">POV</span>
         </button>
 
         {/* Webhooks Hub Quick Launch */}
@@ -122,7 +143,7 @@ export default function HeaderNav({
         {flaggedCount > 0 && (
           <button 
             onClick={() => setActiveTab('fraud_lab')}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-red-50 border border-red-200 text-[#E23744] font-extrabold text-xs hover:bg-red-100 transition animate-pulse cursor-pointer shrink-0 whitespace-nowrap"
+            className="flex items-center gap-1.5 px-2 py-1.5 sm:px-2.5 rounded-xl bg-red-50 border border-red-200 text-[#E23744] font-extrabold text-xs hover:bg-red-100 transition animate-pulse cursor-pointer shrink-0 whitespace-nowrap"
           >
             <ShieldAlert className="w-3.5 h-3.5 text-[#E23744] shrink-0" />
             <span>{flaggedCount} Flagged</span>

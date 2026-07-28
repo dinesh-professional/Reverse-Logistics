@@ -36,7 +36,7 @@ export default function ExecutiveOverview({
   const estimatedSavings = flaggedCount * 34500 + 128500;
 
   return (
-    <div className="w-full p-6 space-y-6 bg-[#FFFBF7]">
+    <div className="w-full space-y-6 bg-[#FFFBF7]">
       
       {/* Top Banner KPI Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
