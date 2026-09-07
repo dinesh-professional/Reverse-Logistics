@@ -49,7 +49,6 @@ export default function AdminDashboard({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<'All' | 'Flagged' | 'In-Transit' | 'Cleared'>('All');
 
-  // Filter Logic
   const filteredReturns = returnsList.filter(item => {
     const matchesSearch = 
       item.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -61,7 +60,6 @@ export default function AdminDashboard({
     if (selectedFilter === 'Flagged') return matchesSearch && item.status === 'Flagged';
     if (selectedFilter === 'In-Transit') return matchesSearch && item.status === 'In-Transit';
     if (selectedFilter === 'Cleared') return matchesSearch && item.status === 'Cleared';
-
     return matchesSearch;
   });
 
@@ -72,116 +70,107 @@ export default function AdminDashboard({
   const getPlatformBadge = (platform: ReturnRecord['platform']) => {
     switch (platform) {
       case 'amazon':
-        return <span className="px-2 py-0.5 rounded bg-orange-100 text-orange-900 border border-orange-300 font-extrabold text-[9px] uppercase tracking-wider whitespace-nowrap inline-block">AMAZON SP-API</span>;
+        return <span className="px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20 font-extrabold text-[9px] uppercase tracking-wider whitespace-nowrap inline-block">AMAZON SP-API</span>;
       case 'flipkart':
-        return <span className="px-2 py-0.5 rounded bg-orange-100 text-orange-900 border border-orange-300 font-extrabold text-[9px] uppercase tracking-wider whitespace-nowrap inline-block">FLIPKART API</span>;
+        return <span className="px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20 font-extrabold text-[9px] uppercase tracking-wider whitespace-nowrap inline-block">FLIPKART API</span>;
       case 'meesho':
-        return <span className="px-2 py-0.5 rounded bg-orange-100 text-orange-900 border border-orange-300 font-extrabold text-[9px] uppercase tracking-wider whitespace-nowrap inline-block">MEESHO HUB</span>;
+        return <span className="px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20 font-extrabold text-[9px] uppercase tracking-wider whitespace-nowrap inline-block">MEESHO HUB</span>;
       default:
-        return <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-300 font-bold text-[9px] uppercase whitespace-nowrap inline-block">DIRECT STORE</span>;
+        return <span className="px-2 py-0.5 rounded bg-slate-700/50 text-slate-300 border border-slate-600 font-bold text-[9px] uppercase whitespace-nowrap inline-block">DIRECT STORE</span>;
     }
   };
 
   return (
-    <div className="w-full space-y-6 text-xs bg-[#FFFBF7]">
+    <div className="w-full space-y-6 text-xs">
       
-      {/* Top Header Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-orange-100 shadow-xs">
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-[#111119] p-5 rounded-2xl border border-purple-500/10 shadow-glass">
         <div>
-          <h2 className="text-base font-black text-slate-900 flex items-center gap-2">
+          <h2 className="text-base font-black text-slate-100 flex items-center gap-2">
             Operations & AI Fraud Command Hub
           </h2>
-          <p className="text-slate-500 text-xs font-medium mt-0.5">Multi-Platform Live Automated Reverse Logistics & Risk Intelligence</p>
+          <p className="text-slate-400 text-xs font-medium mt-0.5">Multi-Platform Live Automated Reverse Logistics & Risk Intelligence</p>
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
           <div className="relative">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-3 text-slate-400" />
+            <Search className="w-3.5 h-3.5 absolute left-3 top-3 text-slate-500" />
             <input
               type="text"
               placeholder="Search ID, Order, LPN or customer..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-8 pr-3 py-2 rounded-xl bg-orange-50/50 border border-orange-200 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#FC8019] focus:bg-white w-64 md:w-72 transition-all"
+              className="pl-8 pr-3 py-2 rounded-xl bg-purple-500/5 border border-purple-500/15 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-purple-500 focus:bg-[#111119] w-64 md:w-72 transition-all"
             />
           </div>
-          <button className="p-2.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#FC8019] border border-orange-200 cursor-pointer">
+          <button className="p-2.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/15 cursor-pointer">
             <SlidersHorizontal className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
-      {/* Metric Cards Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         
-        {/* KPI 1: Total Volume */}
-        <div className="bg-white p-5 rounded-2xl border border-orange-100 shadow-xs hover:border-orange-300 hover:shadow-orange-glow transition-all space-y-3">
+        <div className="bg-[#111119] p-5 rounded-2xl border border-purple-500/10 shadow-glass hover:border-purple-500/30 hover:shadow-purple-glow transition-all space-y-3">
           <div className="flex justify-between items-start">
-            <span className="text-slate-500 font-bold text-xs">Total Returns Processing</span>
-            <div className="w-8 h-8 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-[#FC8019] shrink-0">
+            <span className="text-slate-400 font-bold text-xs">Total Returns Processing</span>
+            <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/15 flex items-center justify-center text-purple-400 shrink-0">
               <Package className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-2xl font-black text-slate-900">{totalCount * 1250 + 42}</span>
-            <span className="text-emerald-700 font-bold text-[11px] flex items-center gap-0.5 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+            <span className="text-2xl font-black text-slate-100">{totalCount * 1250 + 42}</span>
+            <span className="text-emerald-400 font-bold text-[11px] flex items-center gap-0.5 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
               <TrendingUp className="w-3 h-3" /> Multi-Platform
             </span>
           </div>
-          <p className="text-[11px] text-slate-500 font-medium pt-2 border-t border-orange-50">Amazon, Flipkart & Meesho synced</p>
+          <p className="text-[11px] text-slate-500 font-medium pt-2 border-t border-purple-500/5">Amazon, Flipkart & Meesho synced</p>
         </div>
 
-        {/* KPI 2: Fraud Intercept Rate */}
-        <div className="bg-white p-5 rounded-2xl border border-orange-100 shadow-xs hover:border-red-300 hover:shadow-red-glow transition-all space-y-3">
+        <div className="bg-[#111119] p-5 rounded-2xl border border-purple-500/10 shadow-glass hover:border-rose-500/30 hover:shadow-red-glow transition-all space-y-3">
           <div className="flex justify-between items-start">
-            <span className="text-slate-500 font-bold text-xs">Fraud Flag Rate</span>
-            <div className="w-8 h-8 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-[#E23744] shrink-0">
+            <span className="text-slate-400 font-bold text-xs">Fraud Flag Rate</span>
+            <div className="w-8 h-8 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 shrink-0">
               <ShieldAlert className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-2xl font-black text-[#E23744]">{highRiskPercent}%</span>
-            <span className="text-[#E23744] font-extrabold text-[11px] bg-red-50 px-2 py-0.5 rounded border border-red-200">
-              {flaggedCount} High-Risk Intercepted
+            <span className="text-2xl font-black text-rose-400">{highRiskPercent}%</span>
+            <span className="text-rose-400 font-extrabold text-[11px] bg-rose-500/10 px-2 py-0.5 rounded border border-rose-500/20">
+              {flaggedCount} High-Risk
             </span>
           </div>
-          <p className="text-[11px] text-slate-500 font-medium pt-2 border-t border-orange-50">Auto-filing SAFE-T & SPF claims</p>
+          <p className="text-[11px] text-slate-500 font-medium pt-2 border-t border-purple-500/5">Auto-filing SAFE-T & SPF claims</p>
         </div>
 
-        {/* KPI 3: Recovered Value */}
-        <div className="bg-white p-5 rounded-2xl border border-orange-100 shadow-xs hover:border-emerald-300 hover:shadow-green-glow transition-all space-y-3">
+        <div className="bg-[#111119] p-5 rounded-2xl border border-purple-500/10 shadow-glass hover:border-emerald-500/30 hover:shadow-green-glow transition-all space-y-3">
           <div className="flex justify-between items-start">
-            <span className="text-slate-500 font-bold text-xs">Net Fraud Savings</span>
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 shrink-0">
+            <span className="text-slate-400 font-bold text-xs">Net Fraud Savings</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
               <IndianRupee className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-2xl font-black text-slate-900">₹1.84 Cr</span>
-            <span className="text-emerald-700 font-bold text-[11px] bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+            <span className="text-2xl font-black text-slate-100">₹1.84 Cr</span>
+            <span className="text-emerald-400 font-bold text-[11px] bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
               YTD Savings
             </span>
           </div>
-          <p className="text-[11px] text-slate-500 font-medium pt-2 border-t border-orange-50">Automated seller claim reimbursements</p>
+          <p className="text-[11px] text-slate-500 font-medium pt-2 border-t border-purple-500/5">Automated seller claim reimbursements</p>
         </div>
 
       </div>
 
-      {/* Main Grid Section */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         
-        {/* Left Spanning 3 Columns: Returns Queue Table */}
-        <div className="lg:col-span-3 bg-white rounded-2xl border border-orange-100 shadow-xs flex flex-col">
+        <div className="lg:col-span-3 bg-[#111119] rounded-2xl border border-purple-500/10 shadow-glass flex flex-col">
           
-          {/* Table Control Bar */}
-          <div className="p-4 border-b border-orange-100 flex flex-wrap items-center justify-between gap-3 bg-orange-50/40">
+          <div className="p-4 border-b border-purple-500/10 flex flex-wrap items-center justify-between gap-3 bg-purple-500/5">
             <div className="flex items-center gap-2">
-              <Boxes className="w-4 h-4 text-[#FC8019] shrink-0" />
-              <h3 className="font-extrabold text-slate-900 text-sm">Returns Queue & Multi-Platform Action Hub</h3>
+              <Boxes className="w-4 h-4 text-purple-400 shrink-0" />
+              <h3 className="font-extrabold text-slate-100 text-sm">Returns Queue & Action Hub</h3>
             </div>
 
-            {/* Filter Tabs */}
-            <div className="flex items-center bg-white p-1 rounded-xl border border-orange-200">
+            <div className="flex items-center bg-[#111119] p-1 rounded-xl border border-purple-500/15">
               {(['All', 'Flagged', 'In-Transit', 'Cleared'] as const).map(tab => (
                 <button
                   key={tab}
@@ -189,9 +178,9 @@ export default function AdminDashboard({
                   className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                     selectedFilter === tab
                       ? tab === 'Flagged'
-                        ? 'bg-[#E23744] text-white shadow-xs'
-                        : 'bg-[#FC8019] text-white shadow-orange-glow'
-                      : 'text-slate-600 hover:text-slate-900'
+                        ? 'bg-rose-500 text-white shadow-xs'
+                        : 'bg-purple-600 text-white shadow-purple-glow'
+                      : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   {tab}
@@ -200,11 +189,10 @@ export default function AdminDashboard({
             </div>
           </div>
 
-          {/* Table Body */}
           <div className="overflow-x-auto p-3">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-orange-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider bg-orange-50/20">
+                <tr className="border-b border-purple-500/10 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                   <th className="py-3 px-3">Platform & ID</th>
                   <th className="py-3 px-3">Order / LPN Track</th>
                   <th className="py-3 px-3">Customer & Item</th>
@@ -214,7 +202,7 @@ export default function AdminDashboard({
                   <th className="py-3 px-3 text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-orange-100/70">
+              <tbody className="divide-y divide-purple-500/5">
                 {filteredReturns.map((item) => {
                   const isHighRisk = item.riskScore >= 75;
                   const isMedRisk = item.riskScore >= 40 && item.riskScore < 75;
@@ -222,45 +210,41 @@ export default function AdminDashboard({
                   return (
                     <tr
                       key={item.id}
-                      className={`hover:bg-orange-50/40 transition-colors duration-150 group ${
-                        item.status === 'Flagged' ? 'bg-red-50/30' : ''
+                      className={`hover:bg-purple-500/5 transition-colors duration-150 group ${
+                        item.status === 'Flagged' ? 'bg-rose-500/5' : ''
                       }`}
                     >
-                      {/* Platform & ID */}
                       <td className="py-3.5 px-3 align-top whitespace-nowrap">
                         <div className="mb-1">{getPlatformBadge(item.platform)}</div>
-                        <div className="font-mono text-[#FC8019] font-black text-xs leading-normal mt-1">{item.id}</div>
-                        <div className="text-[10px] text-slate-400 font-sans mt-0.5">{item.date}</div>
+                        <div className="font-mono text-purple-400 font-black text-xs leading-normal mt-1">{item.id}</div>
+                        <div className="text-[10px] text-slate-500 font-sans mt-0.5">{item.date}</div>
                       </td>
 
-                      {/* Order / LPN Track */}
                       <td className="py-3.5 px-3 font-mono text-xs align-top whitespace-nowrap">
-                        <div className="font-bold text-slate-900 leading-normal">{item.marketplaceOrderId || 'N/A'}</div>
-                        <div className="text-[11px] text-slate-400 font-sans mt-1">{item.lpnOrTrackId || 'N/A'}</div>
+                        <div className="font-bold text-slate-200 leading-normal">{item.marketplaceOrderId || 'N/A'}</div>
+                        <div className="text-[11px] text-slate-500 font-sans mt-1">{item.lpnOrTrackId || 'N/A'}</div>
                       </td>
 
-                      {/* Product & Customer */}
                       <td className="py-3.5 px-3 align-top max-w-[220px]">
-                        <div className="font-bold text-slate-900 group-hover:text-[#FC8019] transition-colors leading-snug truncate">
+                        <div className="font-bold text-slate-200 group-hover:text-purple-400 transition-colors leading-snug truncate">
                           {item.productName}
                         </div>
-                        <div className="text-[11px] text-slate-500 font-medium mt-1 truncate">{item.customerName}</div>
+                        <div className="text-[11px] text-slate-400 font-medium mt-1 truncate">{item.customerName}</div>
                       </td>
 
-                      {/* Risk Score Indicator */}
                       <td className="py-3.5 px-3 align-top whitespace-nowrap">
                         <div className="flex items-center gap-2 mt-0.5">
-                          <div className="w-12 bg-slate-100 border border-slate-200 rounded-full h-2 overflow-hidden">
+                          <div className="w-12 bg-slate-800 border border-slate-700 rounded-full h-2 overflow-hidden">
                             <div
                               className={`h-full rounded-full ${
-                                isHighRisk ? 'bg-[#E23744]' : isMedRisk ? 'bg-[#F59E0B]' : 'bg-[#60B246]'
+                                isHighRisk ? 'bg-rose-500' : isMedRisk ? 'bg-amber-500' : 'bg-emerald-500'
                               }`}
                               style={{ width: `${item.riskScore}%` }}
                             />
                           </div>
                           <span
                             className={`font-mono font-black text-xs ${
-                              isHighRisk ? 'text-[#E23744]' : isMedRisk ? 'text-amber-600' : 'text-[#60B246]'
+                              isHighRisk ? 'text-rose-400' : isMedRisk ? 'text-amber-400' : 'text-emerald-400'
                             }`}
                           >
                             {item.riskScore}%
@@ -268,23 +252,22 @@ export default function AdminDashboard({
                         </div>
                       </td>
 
-                      {/* AI Status Badge & Claim Tag */}
                       <td className="py-3.5 px-3 align-top whitespace-nowrap space-y-1.5">
                         <div>
                           {item.status === 'Flagged' && (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-red-100 text-[#E23744] border border-red-200 flex items-center gap-1 w-fit">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center gap-1 w-fit">
                               <AlertTriangle className="w-3 h-3 shrink-0" />
                               Flagged Fraud
                             </span>
                           )}
                           {item.status === 'In-Transit' && (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800 border border-amber-200 flex items-center gap-1 w-fit">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center gap-1 w-fit">
                               <Clock className="w-3 h-3 shrink-0" />
                               In-Transit
                             </span>
                           )}
                           {item.status === 'Cleared' && (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-[#60B246] border border-emerald-200 flex items-center gap-1 w-fit">
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1 w-fit">
                               <CheckCircle className="w-3 h-3 shrink-0" />
                               Fast-Tracked
                             </span>
@@ -292,19 +275,18 @@ export default function AdminDashboard({
                         </div>
 
                         {item.claimStatus && item.claimStatus !== 'Not Filed' && (
-                          <span className="px-2 py-0.5 bg-slate-900 text-amber-400 rounded text-[9px] font-mono font-bold inline-block border border-slate-800">
+                          <span className="px-2 py-0.5 bg-slate-800 text-amber-400 rounded text-[9px] font-mono font-bold inline-block border border-slate-700">
                             {item.claimStatus}
                           </span>
                         )}
                       </td>
 
-                      {/* Routing Dropdown Selector */}
                       <td className="py-3.5 px-3 align-top whitespace-nowrap">
                         <select
                           value={item.routing}
                           onChange={(e) => onUpdateRouting(item.id, e.target.value)}
                           aria-label="Select warehouse routing hub"
-                          className="bg-white border border-orange-200 rounded-lg text-xs text-slate-800 p-1.5 focus:border-[#FC8019] focus:outline-none shadow-xs font-bold"
+                          className="bg-[#111119] border border-purple-500/15 rounded-lg text-xs text-slate-200 p-1.5 focus:border-purple-500 focus:outline-none shadow-xs font-bold"
                         >
                           <option value="Refurbish Center Hub B">Refurbish Hub B</option>
                           <option value="Restock WH-1">Restock WH-1</option>
@@ -314,12 +296,11 @@ export default function AdminDashboard({
                         </select>
                       </td>
 
-                      {/* Action Button */}
                       <td className="py-3.5 px-3 align-top text-right whitespace-nowrap">
                         {item.status === 'Flagged' ? (
                           <button
                             onClick={() => onSelectReturnForInspection(item)}
-                            className="px-3 py-1.5 rounded-xl bg-[#E23744] hover:bg-[#C92A36] text-white font-extrabold text-xs shadow-xs transition-all flex items-center gap-1 ml-auto cursor-pointer"
+                            className="px-3 py-1.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-xs shadow-xs transition-all flex items-center gap-1 ml-auto cursor-pointer"
                           >
                             <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
                             Audit & Claim
@@ -327,7 +308,7 @@ export default function AdminDashboard({
                         ) : (
                           <button
                             onClick={() => onSelectReturnForInspection(item)}
-                            className="px-2.5 py-1.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#FC8019] font-bold text-xs border border-orange-200 transition-colors flex items-center gap-1 ml-auto cursor-pointer"
+                            className="px-2.5 py-1.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 font-bold text-xs border border-purple-500/15 transition-colors flex items-center gap-1 ml-auto cursor-pointer"
                           >
                             <ExternalLink className="w-3 h-3 shrink-0" />
                             Inspect
@@ -342,24 +323,22 @@ export default function AdminDashboard({
           </div>
         </div>
 
-        {/* Right 1 Column: Risk Gauges */}
         <div className="space-y-4">
           
-          {/* Gauge 1: High Risk Zone */}
-          <div className="bg-white p-5 rounded-2xl border border-orange-100 flex flex-col items-center justify-center relative shadow-xs text-center space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              High Risk Interception Rate
+          <div className="bg-[#111119] p-5 rounded-2xl border border-purple-500/10 flex flex-col items-center justify-center relative shadow-glass text-center space-y-2">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              High Risk Interception
             </span>
             
             <div className="relative w-32 h-32 my-1">
               <svg className="w-full h-full transform -rotate-90">
-                <circle cx="64" cy="64" r="52" fill="none" stroke="#FFF3EB" strokeWidth="8" />
+                <circle cx="64" cy="64" r="52" fill="none" stroke="#1E1630" strokeWidth="8" />
                 <circle
                   cx="64"
                   cy="64"
                   r="52"
                   fill="none"
-                  stroke="#E23744"
+                  stroke="#F43F5E"
                   strokeWidth="8"
                   strokeDasharray="326"
                   strokeDashoffset={326 - (326 * highRiskPercent) / 100}
@@ -367,31 +346,30 @@ export default function AdminDashboard({
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
-                <span className="text-2xl font-black text-[#E23744]">{highRiskPercent}%</span>
-                <span className="text-[9px] text-slate-400 font-bold uppercase mt-1">FLAGGED</span>
+                <span className="text-2xl font-black text-rose-400">{highRiskPercent}%</span>
+                <span className="text-[9px] text-slate-500 font-bold uppercase mt-1">FLAGGED</span>
               </div>
             </div>
 
             <p className="text-[10px] text-slate-500 font-medium">
-              Amazon LPN, Flipkart IMEI & Meesho Vision Alerts
+              Amazon LPN, Flipkart IMEI & Meesho Vision
             </p>
           </div>
 
-          {/* Gauge 2: Low Risk Cleared Rate */}
-          <div className="bg-white p-5 rounded-2xl border border-orange-100 flex flex-col items-center justify-center relative shadow-xs text-center space-y-2">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              Low Risk Cleared Rate
+          <div className="bg-[#111119] p-5 rounded-2xl border border-purple-500/10 flex flex-col items-center justify-center relative shadow-glass text-center space-y-2">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              Low Risk Cleared
             </span>
             
             <div className="relative w-32 h-32 my-1">
               <svg className="w-full h-full transform -rotate-90">
-                <circle cx="64" cy="64" r="52" fill="none" stroke="#FFF3EB" strokeWidth="8" />
+                <circle cx="64" cy="64" r="52" fill="none" stroke="#1E1630" strokeWidth="8" />
                 <circle
                   cx="64"
                   cy="64"
                   r="52"
                   fill="none"
-                  stroke="#60B246"
+                  stroke="#10B981"
                   strokeWidth="8"
                   strokeDasharray="326"
                   strokeDashoffset={326 - (326 * 85) / 100}
@@ -399,13 +377,13 @@ export default function AdminDashboard({
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
-                <span className="text-2xl font-black text-[#60B246]">85%</span>
-                <span className="text-[9px] text-slate-400 font-bold uppercase mt-1">AUTO-REFUND</span>
+                <span className="text-2xl font-black text-emerald-400">85%</span>
+                <span className="text-[9px] text-slate-500 font-bold uppercase mt-1">AUTO-REFUND</span>
               </div>
             </div>
 
             <p className="text-[10px] text-slate-500 font-medium">
-              Fast-tracked across all connected sellers
+              Fast-tracked across all sellers
             </p>
           </div>
 

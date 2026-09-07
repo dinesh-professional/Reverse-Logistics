@@ -119,7 +119,7 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
         {/* Dynamic Island / Notch */}
         <div className="absolute top-4 left-1/2 -translate-x-1/2 w-28 h-6 bg-slate-900 rounded-full z-50 flex items-center justify-between px-2.5">
           <div className="w-2.5 h-2.5 rounded-full bg-slate-800 border border-slate-700" />
-          <div className="w-2 h-2 rounded-full bg-[#FC8019] animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-[#A855F7] animate-pulse" />
         </div>
 
         {/* Mobile App Header */}
@@ -151,12 +151,12 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
           {/* Step 1: Select Item & Marketplace Platform */}
           {scanStep === 1 && (
             <div className="space-y-3 animate-fadeIn">
-              <div className="p-3 bg-orange-50/80 rounded-2xl border border-orange-200">
-                <div className="flex items-center gap-2 text-[#FC8019] font-bold mb-1">
-                  <Sparkles className="w-3.5 h-3.5 text-[#FC8019]" />
+              <div className="p-3 bg-purple-500/5 rounded-2xl border border-purple-500/15">
+                <div className="flex items-center gap-2 text-[#A855F7] font-bold mb-1">
+                  <Sparkles className="w-3.5 h-3.5 text-[#A855F7]" />
                   <span>Instant Multi-Platform AI Refund</span>
                 </div>
-                <p className="text-[11px] text-slate-600 leading-relaxed">
+                <p className="text-[11px] text-slate-400 leading-relaxed">
                   Select your purchase marketplace (Amazon, Flipkart, or Meesho) and scan 3 photo angles.
                 </p>
               </div>
@@ -196,18 +196,18 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
                   onClick={() => setSelectedProduct(idx)}
                   className={`p-3 rounded-xl border cursor-pointer transition-all duration-200 flex gap-3 items-center ${
                     selectedProduct === idx
-                      ? 'bg-white border-[#FC8019] shadow-orange-glow'
+                      ? 'bg-white border-[#A855F7] shadow-purple-glow'
                       : 'bg-white border-slate-200 hover:border-slate-300'
                   }`}
                 >
                   <img src={prod.image} alt={prod.name} className="w-14 h-14 object-cover rounded-lg bg-slate-100" />
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-slate-900 truncate text-xs">{prod.name}</h3>
-                    <p className="text-[11px] text-[#FC8019] font-extrabold mt-0.5">{prod.price}</p>
+                    <p className="text-[11px] text-[#A855F7] font-extrabold mt-0.5">{prod.price}</p>
                     <p className="text-[10px] text-slate-500 truncate mt-1">Reason: {prod.reason}</p>
                   </div>
                   <div className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                    selectedProduct === idx ? 'border-[#FC8019] bg-[#FC8019]' : 'border-slate-300'
+                    selectedProduct === idx ? 'border-[#A855F7] bg-[#A855F7]' : 'border-slate-300'
                   }`}>
                     {selectedProduct === idx && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                   </div>
@@ -216,7 +216,7 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
 
               <button
                 onClick={handleStartScan}
-                className="w-full mt-4 py-2.5 rounded-xl bg-[#FC8019] hover:bg-[#E56F0D] text-white font-extrabold text-xs shadow-orange-glow transition-all flex items-center justify-center gap-2"
+                className="w-full mt-4 py-2.5 rounded-xl bg-[#A855F7] hover:bg-[#9333EA] text-white font-extrabold text-xs shadow-purple-glow transition-all flex items-center justify-center gap-2"
               >
                 <Camera className="w-4 h-4" />
                 Start {selectedPlatform.toUpperCase()} Photo Scan (3 Angles)
@@ -229,13 +229,13 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
             <div className="space-y-3 animate-fadeIn flex flex-col h-full">
               <div className="flex items-center justify-between text-slate-700 px-1 font-semibold">
                 <span>Angle {activeAngle} of 3 ({selectedPlatform.toUpperCase()})</span>
-                <span className="text-[10px] text-[#FC8019] bg-orange-100 px-2 py-0.5 rounded border border-orange-200 font-bold">
+                <span className="text-[10px] text-[#A855F7] bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20 font-bold">
                   {activeAngle === 1 ? 'Front View' : activeAngle === 2 ? 'Serial Label' : 'Accessories'}
                 </span>
               </div>
 
               {/* Camera Scanner Viewport */}
-              <div className="relative aspect-square w-full rounded-2xl overflow-hidden border border-[#FC8019]/60 bg-slate-900 shadow-md group">
+              <div className="relative aspect-square w-full rounded-2xl overflow-hidden border border-[#A855F7]/60 bg-slate-900 shadow-md group">
                 <img
                   src={mockProducts[selectedProduct].image}
                   alt="Scanning product"
@@ -243,29 +243,29 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
                 />
 
                 {/* Radar Scan Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-[#FC8019]/30 via-transparent to-[#60B246]/30 animate-scan-radar pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#A855F7]/30 via-transparent to-[#10B981]/30 animate-scan-radar pointer-events-none" />
 
                 {/* AI Target Bounding Boxes */}
-                <div className="absolute inset-4 border border-dashed border-[#FC8019] rounded-xl pointer-events-none flex flex-col justify-between p-2">
-                  <div className="flex justify-between items-start text-[9px] font-mono bg-slate-900/80 backdrop-blur-md px-2 py-1 rounded text-[#FC8019] border border-[#FC8019]/40">
+                <div className="absolute inset-4 border border-dashed border-[#A855F7] rounded-xl pointer-events-none flex flex-col justify-between p-2">
+                  <div className="flex justify-between items-start text-[9px] font-mono bg-slate-900/80 backdrop-blur-md px-2 py-1 rounded text-[#A855F7] border border-[#A855F7]/40">
                     <span>STATUS: {isScanning ? 'EXTRACTING MATRIX...' : 'LOCK ON ITEM'}</span>
                     <span>CONF: 98.6%</span>
                   </div>
 
                   {/* Highlight Box */}
-                  <div className="w-20 h-16 border-2 border-[#60B246] rounded bg-[#60B246]/20 self-center flex items-center justify-center text-[9px] font-bold text-[#60B246] backdrop-blur-xs">
+                  <div className="w-20 h-16 border-2 border-[#10B981] rounded bg-[#10B981]/20 self-center flex items-center justify-center text-[9px] font-bold text-[#10B981] backdrop-blur-xs">
                     MATCH: OK
                   </div>
 
                   <div className="flex justify-between items-end text-[9px] font-mono text-white bg-slate-900/80 px-2 py-1 rounded">
                     <span>SKU: {mockProducts[selectedProduct].id}</span>
-                    <span className="text-[#60B246]">OCR: VALID</span>
+                    <span className="text-[#10B981]">OCR: VALID</span>
                   </div>
                 </div>
 
                 {isScanning && (
                   <div className="absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center flex-col gap-2">
-                    <RefreshCw className="w-6 h-6 text-[#FC8019] animate-spin" />
+                    <RefreshCw className="w-6 h-6 text-[#A855F7] animate-spin" />
                     <span className="text-white font-bold text-[11px]">Analyzing AI Vision API...</span>
                   </div>
                 )}
@@ -277,7 +277,7 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
                   <div
                     key={step}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      activeAngle >= step ? 'w-6 bg-[#FC8019]' : 'w-2 bg-slate-300'
+                      activeAngle >= step ? 'w-6 bg-[#A855F7]' : 'w-2 bg-slate-300'
                     }`}
                   />
                 ))}
@@ -286,7 +286,7 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
               <button
                 onClick={handleSimulateAIScan}
                 disabled={isScanning}
-                className="w-full py-2.5 rounded-xl bg-[#FC8019] hover:bg-[#E56F0D] text-white font-extrabold text-xs shadow-orange-glow transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-2.5 rounded-xl bg-[#A855F7] hover:bg-[#9333EA] text-white font-extrabold text-xs shadow-purple-glow transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Scan className="w-4 h-4" />
                 {isScanning ? 'Processing Angle API...' : `Capture Angle ${activeAngle}`}
@@ -298,26 +298,26 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
           {scanStep === 3 && (
             <div className="space-y-3 animate-fadeIn">
               <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-center flex flex-col items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 text-[#60B246] flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 text-[#10B981] flex items-center justify-center">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <h3 className="font-extrabold text-slate-900 text-sm">AI Verification Passed!</h3>
                 <p className="text-[11px] text-slate-600">
-                  Instant refund of <span className="text-[#60B246] font-bold">{mockProducts[selectedProduct].price}</span> pre-approved on {selectedPlatform.toUpperCase()}.
+                  Instant refund of <span className="text-[#10B981] font-bold">{mockProducts[selectedProduct].price}</span> pre-approved on {selectedPlatform.toUpperCase()}.
                 </p>
               </div>
 
               {/* Pickup Schedule Box */}
               <div className="p-3 bg-white rounded-xl border border-slate-200 space-y-2.5 shadow-sm">
                 <div className="flex items-center gap-2 text-slate-900 font-bold">
-                  <Truck className="w-4 h-4 text-[#FC8019]" />
+                  <Truck className="w-4 h-4 text-[#A855F7]" />
                   <span>{selectedPlatform.toUpperCase()} Partner Courier Pickup</span>
                 </div>
                 
                 {/* Timeline Progress */}
                 <div className="space-y-2 pl-2 border-l-2 border-slate-200">
                   <div className="relative pl-3">
-                    <div className="absolute -left-[11px] top-1 w-2.5 h-2.5 rounded-full bg-[#FC8019] ring-4 ring-orange-100" />
+                    <div className="absolute -left-[11px] top-1 w-2.5 h-2.5 rounded-full bg-[#A855F7] ring-4 ring-purple-500/20" />
                     <p className="font-bold text-slate-900">AI Photo Scan Approved</p>
                     <p className="text-[10px] text-slate-500">Today, 11:42 AM</p>
                   </div>
@@ -343,7 +343,7 @@ export default function CustomerMobileApp({ onReturnSubmitted }: CustomerMobileA
 
         {/* Mobile Bottom Navigation Bar */}
         <div className="bg-white border-t border-slate-200 px-4 py-2 flex justify-around text-slate-500 z-40 shrink-0">
-          <button className="flex flex-col items-center gap-0.5 text-[#FC8019] font-bold">
+          <button className="flex flex-col items-center gap-0.5 text-[#A855F7] font-bold">
             <Scan className="w-4 h-4" />
             <span className="text-[9px]">Return</span>
           </button>

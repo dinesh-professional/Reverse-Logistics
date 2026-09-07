@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import SidebarNav, { NavTab } from '../components/SidebarNav';
-import HeaderNav from '../components/HeaderNav';
+import HeaderNav, { NavTab } from '../components/HeaderNav';
 import ExecutiveOverview from '../components/ExecutiveOverview';
 import AdminDashboard, { ReturnRecord } from '../components/AdminDashboard';
 import CustomerReturnPortal from '../components/CustomerReturnPortal';
@@ -17,12 +16,10 @@ export default function Home() {
   const [isIntegrationsModalOpen, setIsIntegrationsModalOpen] = useState<boolean>(false);
   const [selectedForInspection, setSelectedForInspection] = useState<ReturnRecord | null>(null);
   const [returnsList, setReturnsList] = useState<ReturnRecord[]>([]);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
-  // Fetch returns from API with platform filter
   const fetchReturns = async (platformFilter?: string) => {
     try {
-      const url = platformFilter && platformFilter !== 'all' 
+      const url = platformFilter && platformFilter !== 'all'
         ? `/api/returns?platform=${platformFilter}`
         : '/api/returns';
       const res = await fetch(url);
@@ -39,12 +36,10 @@ export default function Home() {
     fetchReturns(selectedPlatform);
   }, [selectedPlatform]);
 
-  // Handle return submission from Customer Return Portal or Webhook
   const handleReturnSubmitted = (newItemRecord: ReturnRecord) => {
     setReturnsList(prev => [newItemRecord, ...prev]);
   };
 
-  // Update dynamic warehouse routing
   const handleUpdateRouting = async (id: string, newRouting: string) => {
     try {
       const res = await fetch('/api/fraud-audit', {
@@ -63,9 +58,8 @@ export default function Home() {
     }
   };
 
-  // Fraud Decision & Seller Protection Claim Handler
   const handleDecision = async (
-    id: string, 
+    id: string,
     action: 'reject' | 'approve' | 'audit' | 'file_claim',
     routing?: string,
     claimDetails?: { claimStatus: ReturnRecord['claimStatus']; claimId: string }
@@ -97,74 +91,54 @@ export default function Home() {
     }
   };
 
-  const flaggedCount = returnsList.filter(r => r.status === 'Flagged').length;
-
   return (
-    <div className="flex flex-col md:flex-row min-h-screen w-full md:h-screen md:overflow-hidden bg-[#FFFBF7] font-sans text-slate-900 selection:bg-[#FC8019] selection:text-white">
-      
-      {/* Sidebar Navigation Bar */}
-      <SidebarNav
+    <div className="flex flex-col min-h-screen w-full bg-transparent font-sans text-[#F1F5F9] selection:bg-purple-600 selection:text-white">
+
+      {/* Top Navigation Bar */}
+      <HeaderNav
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         selectedPlatform={selectedPlatform}
-        flaggedCount={flaggedCount}
-        totalReturnsCount={returnsList.length}
-        isOpenMobile={isMobileMenuOpen}
-        onCloseMobile={() => setIsMobileMenuOpen(false)}
+        setSelectedPlatform={setSelectedPlatform}
+        onRefreshData={() => fetchReturns(selectedPlatform)}
       />
 
-      {/* Main App Workspace View Container */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden relative">
-        
-        {/* Top Header Controls Bar (Fixed Header) */}
-        <HeaderNav
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          selectedPlatform={selectedPlatform}
-          setSelectedPlatform={setSelectedPlatform}
-          totalReturnsCount={returnsList.length}
-          flaggedCount={flaggedCount}
-          onRefreshData={() => fetchReturns(selectedPlatform)}
-          onToggleMobileMenu={() => setIsMobileMenuOpen(prev => !prev)}
-        />
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
 
-        {/* Dynamic Main Workspace Scrollable Viewport */}
-        <main className="flex-1 overflow-y-auto relative bg-[#FFFBF7] p-3 sm:p-6">
-          
-          {activeTab === 'overview' && (
-            <ExecutiveOverview
-              returnsList={returnsList}
-              onNavigateTab={(tab) => setActiveTab(tab)}
-              onSelectReturn={(rec) => setSelectedForInspection(rec)}
-            />
-          )}
+        {activeTab === 'overview' && (
+          <ExecutiveOverview
+            returnsList={returnsList}
+            onNavigateTab={(tab) => setActiveTab(tab)}
+            onSelectReturn={(rec) => setSelectedForInspection(rec)}
+          />
+        )}
 
-          {(activeTab === 'returns' || activeTab === 'fraud_lab') && (
-            <AdminDashboard
-              returnsList={returnsList}
-              onSelectReturnForInspection={(record) => setSelectedForInspection(record)}
-              onUpdateRouting={handleUpdateRouting}
-            />
-          )}
+        {(activeTab === 'returns' || activeTab === 'fraud_lab') && (
+          <AdminDashboard
+            returnsList={returnsList}
+            onSelectReturnForInspection={(record) => setSelectedForInspection(record)}
+            onUpdateRouting={handleUpdateRouting}
+          />
+        )}
 
-          {activeTab === 'customer_portal' && (
-            <CustomerReturnPortal
-              onReturnSubmitted={handleReturnSubmitted}
-            />
-          )}
+        {activeTab === 'customer_portal' && (
+          <CustomerReturnPortal
+            onReturnSubmitted={handleReturnSubmitted}
+          />
+        )}
 
-          {activeTab === 'stores' && (
-            <PlatformIntegrationsView
-              onReturnIngested={() => fetchReturns(selectedPlatform)}
-            />
-          )}
+        {activeTab === 'stores' && (
+          <PlatformIntegrationsView
+            onReturnIngested={() => fetchReturns(selectedPlatform)}
+          />
+        )}
 
-          {activeTab === 'policy_rules' && (
-            <PolicyRulesEngine />
-          )}
+        {activeTab === 'policy_rules' && (
+          <PolicyRulesEngine />
+        )}
 
-        </main>
-      </div>
+      </main>
 
       {/* Fraud Alert Deep Inspection Modal Drawer */}
       <FraudInspectionModal
